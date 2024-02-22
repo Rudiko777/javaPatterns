@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
-        Comparator<Human> humanComparator = (Human obj1, Human obj2) -> obj1.getAge() - obj2.getAge();
+//        Comparator<Human> humanComparator = Comparator.comparingInt(Human::getAge);
         Human man = new Human(19, "Rudolf", "Chakryan", LocalDate.of(2004, 10, 12), 75);
         Human women = new Human(18, "Evgen", "Ivanova", LocalDate.of(2004, 7, 1), 53);
         Human daughter = new Human(10, "Olesa", "Lichka", LocalDate.of(2009, 9, 10), 80);
@@ -23,7 +23,7 @@ public class Main {
         listOfHumans.add(brother);
 
         Stream<Human> stream = listOfHumans.stream();
-        String concatenatedNames = stream.sorted(humanComparator)
+        String concatenatedNames = stream.sorted(Comparator.comparingInt(Human::getAge))
                 .filter(human -> human.getAge() < 20)
                 .filter(human -> human.getName().contains("e"))
                 .map(human -> human.getName().charAt(0))
