@@ -5,15 +5,22 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.*;
 
 public class SemahoreSet<T> implements Set<T>{
-    public volatile Set<T> set;
+    public final Set<T> set;
     public final Semaphore sem;
     public SemahoreSet(){
         set = new HashSet<>();
-        sem = new Semaphore(2);
+        sem = new Semaphore(1);
     }
     @Override
     public int size() {
-        return set.size();
+        try {
+            sem.acquire();
+            return set.size();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            sem.release();
+        }
     }
 
     @Override
@@ -51,12 +58,12 @@ public class SemahoreSet<T> implements Set<T>{
     public boolean add(T obj) {
         try {
             sem.acquire();
-            return set.add(obj);
+            set.add(obj);
+            sem.release();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return true;
         } finally {
-            sem.release();
+            return true;
         }
     }
 

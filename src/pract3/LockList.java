@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class LockList<T> implements List<T>{
-    private final List<T> list;
+    public final List<T> list;
     private final Lock lock;
 
     public LockList() {

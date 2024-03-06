@@ -16,16 +16,16 @@ public class Main {
 //    }
 
     public static void main(String[] args) throws Exception {
-        SemahoreSet<Integer> set = new SemahoreSet<>();
+        LockList<Integer> list = new LockList<>();
         Thread one = new Thread(()->{
             for (int i = 0; i < 7; i++) {
-                set.add(i);
+                list.add(i);
                 System.out.println(i);
             }
         });
         Thread two = new Thread(()->{
             for (int i = 0; i < 7; i++) {
-                set.add(i);
+                list.add(i);
                 System.out.println(i);
             }
         });
@@ -33,5 +33,25 @@ public class Main {
         two.start();
 
         Thread.sleep(3000);
+        System.out.println(list.list);
+
+//        SemahoreSet<Integer> set = new SemahoreSet<>();
+//        Thread one = new Thread(()->{
+//            for (int i = 0; i < 7; i++) {
+//                set.add(i);
+//                System.out.println(i);
+//            }
+//        });
+//        Thread two = new Thread(()->{
+//            for (int i = 0; i < 7; i++) {
+//                set.add(i);
+//                System.out.println(i);
+//            }
+//        });
+//        one.start();
+//        two.start();
+//
+//        Thread.sleep(3000);
+//        System.out.println(set.set);
     }
 }
